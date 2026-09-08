@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Contact.css';
+import API_BASE_URL from '../config/api';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -48,8 +49,11 @@ export default function Contact() {
     setIsSubmitting(true);
     setServerError('');
 
+    // Ensure production railway endpoint fallback
+    const targetBaseUrl = API_BASE_URL || 'https://nexora-solutions-production.up.railway.app';
+
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(`${targetBaseUrl}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -66,7 +70,7 @@ export default function Contact() {
       setIsSuccess(true);
     } catch (err) {
       console.error('Contact submission error:', err);
-      setServerError(err.message || 'Unable to connect to server. Please verify backend is running on port 5000.');
+      setServerError(err.message || 'Unable to connect to server. Please verify backend is active.');
     } finally {
       setIsSubmitting(false);
     }
@@ -311,7 +315,7 @@ export default function Contact() {
                     <select 
                       name="service" 
                       value={formData.service} 
-                      onChange={handleInputChange}
+                      onChange={handleInputChange} 
                       className="form-control-select"
                       disabled={isSubmitting}
                     >

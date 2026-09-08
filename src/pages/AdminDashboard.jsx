@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Admin.css';
+import API_BASE_URL from '../config/api';
 
 export default function AdminDashboard() {
   const [tab, setTab] = useState('inquiries');
@@ -26,8 +27,8 @@ export default function AdminDashboard() {
     setError('');
     const endpoint =
       tab === 'inquiries'
-        ? 'http://localhost:5000/api/contact'
-        : 'http://localhost:5000/api/careers/applications';
+        ? `${API_BASE_URL}/api/contact`
+        : `${API_BASE_URL}/api/careers/applications`;
 
     try {
       const res = await fetch(endpoint, {
@@ -57,8 +58,8 @@ export default function AdminDashboard() {
   const handleStatusChange = async (id, newStatus, type) => {
     const endpoint =
       type === 'inquiry'
-        ? `http://localhost:5000/api/contact/${id}/status`
-        : `http://localhost:5000/api/careers/applications/${id}/status`;
+        ? `${API_BASE_URL}/api/contact/${id}/status`
+        : `${API_BASE_URL}/api/careers/applications/${id}/status`;
 
     try {
       const res = await fetch(endpoint, {
@@ -91,8 +92,8 @@ export default function AdminDashboard() {
 
     const endpoint =
       type === 'inquiry'
-        ? `http://localhost:5000/api/contact/${id}`
-        : `http://localhost:5000/api/careers/applications/${id}`;
+        ? `${API_BASE_URL}/api/contact/${id}`
+        : `${API_BASE_URL}/api/careers/applications/${id}`;
 
     try {
       const res = await fetch(endpoint, {
@@ -224,7 +225,7 @@ export default function AdminDashboard() {
                     <td>
                       {app.resumeUrl ? (
                         <a
-                          href={`http://localhost:5000${app.resumeUrl}`}
+                          href={`${API_BASE_URL}${app.resumeUrl}`}
                           target="_blank"
                           rel="noreferrer"
                           className="table-download-link"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Careers.css';
+import API_BASE_URL from '../config/api';
 
 const OPEN_POSITIONS = [
   {
@@ -109,7 +110,7 @@ export default function Careers() {
     formData.append('resume', resumeFile);
 
     try {
-      const response = await fetch('http://localhost:5000/api/careers/apply', {
+      const response = await fetch(`${API_BASE_URL}/api/careers/apply`, {
         method: 'POST',
         body: formData
       });
